@@ -80,6 +80,7 @@ public class AddPreset extends JFrame{
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.addChoosableFileFilter(new FileNameExtensionFilter(
     "Image files", ImageIO.getReaderFileSuffixes()));
+				fileChooser.setAcceptAllFileFilterUsed(false);
 				fileChooser.showOpenDialog(addPreset);
 				file = fileChooser.getSelectedFile().getAbsolutePath();
 			}	

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public class PresetsManager extends JFrame {
@@ -33,6 +34,13 @@ public class PresetsManager extends JFrame {
 		
 		JButton btnRemovePreset = new JButton("Remove preset");
 		btnRemovePreset.setBounds(151, 6, 143, 29);
+		btnRemovePreset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (JOptionPane.showConfirmDialog(MapEditor.presetsManager, "Are you sure to delete this preset ? All created game objects with this preset will be deleted !") == 0) {
+					MapEditor.removePreset(MapEditor.selectedPresetName);	
+				}
+			}
+		});
 		getContentPane().add(btnRemovePreset);
 		
 		list = new JList<String>();

@@ -3,7 +3,6 @@ package MapEditor;
 public class GameObject {
 
 	public String name;
-	public String filename;
 	public float x, y;
 	public boolean selected;
 	

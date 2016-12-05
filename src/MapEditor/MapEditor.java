@@ -33,6 +33,13 @@ public class MapEditor {
 	
 	public static void removePreset(String name) {
 		Preset p = null;
+		ArrayList<GameObject> gosToDelete = new ArrayList<GameObject>();
+		for (GameObject g : gameObjects) {
+			if (g.name.equals(name)) {
+				gosToDelete.add(g);
+			}
+		}
+		gameObjects.removeAll(gosToDelete);
 		for (Preset a : presets) {
 			if (a.name.equals(name)) {
 				p = a;
