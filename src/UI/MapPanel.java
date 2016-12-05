@@ -75,8 +75,11 @@ public class MapPanel extends JPanel implements MouseWheelListener, MouseListene
 	}
 
 	public void mousePressed(MouseEvent e) {
-		if (MapEditor.selectedPresetName != "" && MapEditor.selectedPresetName != null) {
+		if (MapEditor.selectedPresetName != "" && MapEditor.selectedPresetName != null && MapEditor.selectedTool == MapEditor.ADD) {
 			MapEditor.addGameObject(MapEditor.selectedPresetName, ((int) mouseX / 64) * 64, ((int) mouseY / 64) * 64);
+		}
+		if (MapEditor.selectedTool == MapEditor.ERASE) {
+			MapEditor.removeGameObject(((int) mouseX / 64) * 64, ((int) mouseY / 64) * 64);
 		}
 		
 	}

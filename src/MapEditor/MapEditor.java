@@ -4,14 +4,20 @@ import java.util.ArrayList;
 
 import UI.MapFrame;
 import UI.PresetsManager;
+import UI.Tools;
 
 public class MapEditor {
 
 	public static MapFrame mapFrame;
 	public static PresetsManager presetsManager;
+	public static Tools tools;
 	public static ArrayList<Preset> presets;
 	public static ArrayList<GameObject> gameObjects;
 	public static String selectedPresetName;
+	public static int selectedTool;
+	
+	public static final int ADD = 0;
+	public static final int ERASE = 1;
 	
 	public static void main(String[] args) {
 		presets = new ArrayList<Preset>();
@@ -22,9 +28,10 @@ public class MapEditor {
 		addGameObject("Wall", 0f, 0f);
 		addGameObject("Wall", 0f, 64f);
 		addGameObject("Wall", 0f, 128f);
-		selectedPresetName = "Wall";
+		selectedTool = ADD;
 		mapFrame = new MapFrame();
 		presetsManager = new PresetsManager();
+		tools = new Tools();
 	}
 	
 	public static void addPreset(Preset g) {
@@ -59,6 +66,16 @@ public class MapEditor {
 			}
 		}
 		return null;
+	}
+	
+	public static void removeGameObject (int x, int y) {
+		ArrayList<GameObject> gosToDelete = new ArrayList<GameObject>();
+		for (GameObject g : gameObjects) {
+			if (g.x == x && g.y == y) {
+				gosToDelete.add(g);
+			}
+		}
+		gameObjects.removeAll(gosToDelete);
 	}
 
 }
