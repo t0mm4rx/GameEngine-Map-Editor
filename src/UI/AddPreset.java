@@ -1,7 +1,9 @@
 package UI;
 
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -9,12 +11,14 @@ import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import MapEditor.Component;
 import MapEditor.Preset;
 
 @SuppressWarnings("serial")
@@ -23,6 +27,8 @@ public class AddPreset extends JFrame{
 	private String file;
 	private JCheckBox chckbxNewCheckBox;
 	private JFrame addPreset;
+	private JList<String> list;
+	private ArrayList<Component> comps;
 	
 	public AddPreset() {
 		this.setTitle("Create a new preset");
@@ -100,6 +106,57 @@ public class AddPreset extends JFrame{
 			}
 		});
 		getContentPane().add(chckbxNewCheckBox);
+		
+		JLabel lblComponents = new JLabel("Components");
+		lblComponents.setBounds(6, 105, 80, 16);
+		getContentPane().add(lblComponents);
+		
+		list = new JList<String>();
+		list.setBounds(6, 133, 279, 163);
+		getContentPane().add(list);
+		
+		JButton btnAdd = new JButton("Add");
+		btnAdd.setBounds(139, 100, 80, 29);
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ComponentCreator();
+			}
+		});
+		getContentPane().add(btnAdd);
+		
+		JButton btnNewButton = new JButton("Remove");
+		btnNewButton.setBounds(211, 100, 80, 29);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				removeSelectedComp();
+			}
+		});
+		getContentPane().add(btnNewButton);
 		this.setVisible(true);
+	}
+	
+	public void paint(Graphics g) {
+		super.paint(g);
+		refreshList();
+		repaint();
+	}
+	
+	public void refreshList() {
+		if (list.getModel().getSize() != comps.size()) {
+			String[] model = new String[comps.size()];
+			for (int i = 0; i < model.length; i++) {
+				model[i] = comps.get(i).name;
+			}
+		}
+	}
+	
+	public void removeSelectedComp() {
+		Component toDelete = null;
+		for (Component c : comps) {
+			if (c.name.equals(list.getSelectedValue())) {
+				toDelete = c;
+			}
+		}
+		comps.remove(toDelete);
 	}
 }

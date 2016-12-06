@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import MapEditor.MapExporter;
+
 @SuppressWarnings("serial")
 public class Tools extends JFrame {
 
@@ -22,6 +24,11 @@ public class Tools extends JFrame {
 		
 		JButton btnSave = new JButton("Save");
 		btnSave.setBounds(0, 6, 117, 29);
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MapExporter.export();
+			}
+		});
 		getContentPane().add(btnSave);
 		
 		JButton btnImport = new JButton("Import");
