@@ -57,6 +57,7 @@ public class Component {
 	}
 	
 	public Component (String name, String text, String font, int size) {
+		this.bodyType = TEXT;
 		this.name = name;
 		this.text = text;
 		this.font = font;

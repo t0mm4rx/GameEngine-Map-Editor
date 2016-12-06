@@ -38,6 +38,7 @@ public class AddPreset extends JFrame{
 		
 		addPreset = this;
 		file = "images/none.png";
+		comps = new ArrayList<Component>();
 		
 		JButton btnOk = new JButton("OK");
 		btnOk.setBounds(168, 301, 117, 29);
@@ -119,7 +120,11 @@ public class AddPreset extends JFrame{
 		btnAdd.setBounds(139, 100, 80, 29);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ComponentCreator();
+				Component c = new ComponentCreator().getComponent();
+				System.out.println(c != null);
+				if (c != null) {
+					comps.add(c);
+				}
 			}
 		});
 		getContentPane().add(btnAdd);
@@ -132,6 +137,7 @@ public class AddPreset extends JFrame{
 			}
 		});
 		getContentPane().add(btnNewButton);
+		
 		this.setVisible(true);
 	}
 	
@@ -142,10 +148,12 @@ public class AddPreset extends JFrame{
 	}
 	
 	public void refreshList() {
-		if (list.getModel().getSize() != comps.size()) {
-			String[] model = new String[comps.size()];
-			for (int i = 0; i < model.length; i++) {
-				model[i] = comps.get(i).name;
+		if (comps != null) {
+			if (list.getModel().getSize() != comps.size()) {
+				String[] model = new String[comps.size()];
+				for (int i = 0; i < model.length; i++) {
+					model[i] = comps.get(i).name;
+				}
 			}
 		}
 	}
