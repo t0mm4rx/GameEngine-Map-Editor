@@ -46,4 +46,15 @@ public class Preset {
 		comps.remove(compToDelete);
 	}
 	
+	public Component getComponent(int type) {
+		
+		for (Component comp : comps) {
+			if (comp.type == type) {
+				return comp;
+			}
+		}
+		
+		return null;
+	}
+	
 }

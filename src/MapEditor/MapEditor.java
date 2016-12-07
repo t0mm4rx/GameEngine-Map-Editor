@@ -22,12 +22,6 @@ public class MapEditor {
 	public static void main(String[] args) {
 		presets = new ArrayList<Preset>();
 		gameObjects = new ArrayList<GameObject>();
-		addPreset(new Preset("Wall", "images/wall.jpeg"));
-		addPreset(new Preset("Tree", "images/wall.jpeg"));
-		addPreset(new Preset("Door", "images/wall.jpeg"));
-		addGameObject("Wall", 0f, 0f);
-		addGameObject("Wall", 0f, 64f);
-		addGameObject("Wall", 0f, 128f);
 		selectedTool = ADD;
 		mapFrame = new MapFrame();
 		presetsManager = new PresetsManager();

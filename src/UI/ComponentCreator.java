@@ -1,11 +1,13 @@
 package UI;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -34,19 +36,15 @@ public class ComponentCreator extends JFrame{
 	private JButton btnCancel;
 	private JFrame _this;
 	private String imageSrc, fontSrc;
+	public float r, g, b, a;
 	
-	private boolean isRunning;
-	private Component comp;
-	
-	public ComponentCreator() {
+	public ComponentCreator(AddPreset frame) {
 		this.setTitle("Create a new component");
 		this.setSize(281, 381);
 		this.setResizable(false);
 		getContentPane().setLayout(null);
 		
 		_this = this;
-		
-		isRunning = true;
 		
 		JLabel lblName = new JLabel("Name :");
 		lblName.setBounds(6, 6, 61, 16);
@@ -112,6 +110,15 @@ public class ComponentCreator extends JFrame{
 		
 		btnColor = new JButton("Choose");
 		btnColor.setBounds(158, 150, 117, 29);
+		btnColor.addActionListener(new ActionListener() {
+			public void actionPerformed (ActionEvent e) {
+				Color color = JColorChooser.showDialog(null, "Choose a color", null);
+				r = color.getRed();
+				g = color.getGreen();
+				b = color.getBlue();
+				a = color.getAlpha();
+			}
+		});
 		getContentPane().add(btnColor);
 		
 		JLabel lblText = new JLabel("Text :");
@@ -129,6 +136,16 @@ public class ComponentCreator extends JFrame{
 		
 		btnFont = new JButton("Choose");
 		btnFont.setBounds(158, 206, 117, 29);
+		btnFont.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.addChoosableFileFilter(new FileNameExtensionFilter(
+    "Font files", "ttf"));
+				fileChooser.setAcceptAllFileFilterUsed(false);
+				fileChooser.showOpenDialog(_this);
+				fontSrc = fileChooser.getSelectedFile().getAbsolutePath();
+			}
+		});
 		getContentPane().add(btnFont);
 		
 		JLabel lblRadius = new JLabel("Radius :");
@@ -166,20 +183,43 @@ public class ComponentCreator extends JFrame{
 					switch (comboBox.getSelectedIndex()) {
 					case 0:
 						if (imageSrc != null) {
-							comp = new Component(name.getText(), imageSrc);
+							frame.comps.add(new Component(name.getText(), imageSrc));
+							dispose();
 						} else {
 							alert("Please choose an image");
 						}
-						isRunning = false;
-						dispose();
 						break;
 					case 1:
+						if (width.getText() != "" && height.getText() != "") {
+							frame.comps.add(new Component(name.getText(), (int) Float.parseFloat(width.getText()), (int) Float.parseFloat(height.getText()), bodyType.getSelectedIndex()));
+							dispose();
+						} else {
+							alert("Please fill all the properties");
+						}
 						break;
 					case 2:
+						if (radius.getText() != "") {
+							frame.comps.add(new Component(name.getText(), (int) Float.parseFloat(radius.getText()), bodyType.getSelectedIndex()));
+							dispose();
+						} else {
+							alert("Please fill all the properties");
+						}
 						break;
 					case 3:
+						if (width.getText() != "" && height.getText() != "") {
+							frame.comps.add(new Component(name.getText(), (int) Float.parseFloat(width.getText()), (int) Float.parseFloat(height.getText()), r, g, b, a));
+							dispose();
+						} else {
+							alert("Please fill all the properties");
+						}
 						break;
 					case 4:
+						if (text.getText() != "" && fontSrc != "" && size.getText() != "") {
+							frame.comps.add(new Component(name.getText(), text.getText(), fontSrc, (int) Float.parseFloat(size.getText())));
+							dispose();
+						} else {
+							alert("Please fill all the properties");
+						}
 						break;
 					}
 				} else {
@@ -193,7 +233,6 @@ public class ComponentCreator extends JFrame{
 		btnCancel.setBounds(40, 324, 117, 29);
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				isRunning = false;
 				dispose();
 			}
 		});
@@ -240,13 +279,6 @@ public class ComponentCreator extends JFrame{
 		radius.setEnabled(false);
 		bodyType.setEnabled(false);
 		size.setEnabled(false);
-	}
-	
-	public Component getComponent() {
-		while (comp != null && isRunning) {
-		
-		}
-		return null;
 	}
 	
 	public void alert(String message) {

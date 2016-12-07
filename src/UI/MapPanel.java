@@ -11,6 +11,7 @@ import java.awt.event.MouseWheelListener;
 
 import javax.swing.JPanel;
 
+import MapEditor.Component;
 import MapEditor.GameObject;
 import MapEditor.MapEditor;
 
@@ -30,14 +31,26 @@ public class MapPanel extends JPanel implements MouseWheelListener, MouseListene
 	}
 	
 	public void paint(Graphics g) {
-		
+
 		super.paint(g);
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.translate(x, y);
 		((Graphics2D) g).scale(zoom, zoom);
 		for (GameObject go : MapEditor.gameObjects) {
-			g.drawImage(MapEditor.getPreset(go.name).image, (int) go.x, (int) go.y, null);
+			
+			if (MapEditor.getPreset(go.name).getComponent(Component.SPRITE_RENDERER) != null) {
+				System.out.println("T");
+				g.drawImage(MapEditor.getPreset(go.name).image, (int) go.x, (int) go.y, null);
+			}
+			if (MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER) != null) {
+				g.setColor(new Color(MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).r,
+						MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).g,
+						MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).b,
+						MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).a));
+				g.fillRect((int) go.x, (int) go.y, MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).width, MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).height);
+			}
+			
 		}
 		g.setColor(Color.LIGHT_GRAY);
 		for (int i = -64 * 100; i < getWidth() * 3; i += 64) {

@@ -63,4 +63,8 @@ public class Component {
 		this.font = font;
 		this.size = size;
 	}
+	
+	public String getString() {
+		return "";
+	}
 }
