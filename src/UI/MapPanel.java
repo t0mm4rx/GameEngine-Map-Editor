@@ -40,14 +40,13 @@ public class MapPanel extends JPanel implements MouseWheelListener, MouseListene
 		for (GameObject go : MapEditor.gameObjects) {
 			
 			if (MapEditor.getPreset(go.name).getComponent(Component.SPRITE_RENDERER) != null) {
-				System.out.println("T");
-				g.drawImage(MapEditor.getPreset(go.name).image, (int) go.x, (int) go.y, null);
+				g.drawImage(MapEditor.getPreset(go.name).getComponent(Component.SPRITE_RENDERER).image, (int) go.x, (int) go.y, null);
 			}
 			if (MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER) != null) {
-				g.setColor(new Color(MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).r,
-						MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).g,
-						MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).b,
-						MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).a));
+				g.setColor(new Color(MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).r / 255,
+						MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).g / 255,
+						MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).b / 255,
+						MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).a / 255));
 				g.fillRect((int) go.x, (int) go.y, MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).width, MapEditor.getPreset(go.name).getComponent(Component.BOX_RENDERER).height);
 			}
 			

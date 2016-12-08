@@ -1,0 +1,1 @@
+- [ ] Map pane : x, y ==> mouseX, mouseY

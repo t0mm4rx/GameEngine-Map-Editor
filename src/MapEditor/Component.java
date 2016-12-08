@@ -1,5 +1,11 @@
 package MapEditor;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 public class Component {
 
 	public static final int SPRITE_RENDERER = 1;
@@ -12,6 +18,7 @@ public class Component {
 	
 	//Sprite Renderer
 	public String src;
+	public Image image;
 	//General
 	public int width, height;
 	public String name;
@@ -28,6 +35,11 @@ public class Component {
 	public Component (String name, String src) {
 		this.name = name;
 		this.type = SPRITE_RENDERER;
+		try {
+			image = ImageIO.read(new File(src));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		this.src = src;
 	}
 	
@@ -65,6 +77,18 @@ public class Component {
 	}
 	
 	public String getString() {
+		switch (type) {
+		case SPRITE_RENDERER:
+			break;
+		case BOX_BODY:
+			break;
+		case CIRCLE_BODY:
+			break;
+		case BOX_RENDERER:
+			break;
+		case TEXT:
+			break;
+		}
 		return "";
 	}
 }
